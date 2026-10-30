@@ -1,0 +1,21 @@
+name: Schedule Probe
+
+# 临时诊断用：验证本仓库的 GitHub 原生 schedule 是否会被注册和触发。
+# 确认排查结束后应删除本文件。
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Report schedule firing
+        run: |
+          echo "schedule probe fired at $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "event=${{ github.event_name }}"
