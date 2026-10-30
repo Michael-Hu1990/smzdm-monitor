@@ -1,11 +1,8 @@
 name: SMZDM 好价监控 NEW
 
 on:
-  # 自部署：使用 GitHub Actions 原生 schedule，每 15 分钟扫描一次。
-  # 刻意避开 :00/:15/:30/:45 —— GitHub 在每个整点负载最高，定时任务最容易被丢弃或长时间延迟。
-  # 若同时配置 cron-job.org 触发，请移除本 schedule，避免同一轮重复扫描。
-  schedule:
-    - cron: '4,19,34,49 * * * *'
+  # 自部署：由 cron-job.org 每 15 分钟调用 GitHub API 触发 repository_dispatch。
+  # 不要再叠加 GitHub 原生 schedule（fork/新仓库 schedule 注册不可靠），避免同一轮重复扫描。
   workflow_dispatch:
     inputs:
       debug_article_id:

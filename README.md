@@ -210,7 +210,7 @@ python3 -m unittest -v
 
 `.github/workflows/smzdm.yml` 当前配置：
 
-- 由 GitHub Actions 原生 `schedule` 每 15 分钟触发一次（`*/15 * * * *`）。若同时接入 cron-job.org 触发，请移除 `schedule`，避免两套定时器造成重复扫描。
+- 由 cron-job.org 每 15 分钟调用 GitHub API 触发 `repository_dispatch`（自部署方案；GitHub 原生 schedule 在 fork/新仓库注册不可靠，不再使用）。不要再叠加 `schedule`，避免两套定时器造成重复扫描。
 - 支持 `workflow_dispatch` 手动触发。
 - 手动触发时可选填 `debug_article_id`，先兼容旧缓存的数据库表结构，再打印该文章最近 2 天的候选快照、相同文章/SKU/标题指纹的成功推送历史，以及当前接收人的延迟复查队列位置，用于定位具体漏推或判重原因；留空不影响正常运行。
 - 支持 `repository_dispatch`，可由 cron-job.org 请求 GitHub API 触发。
